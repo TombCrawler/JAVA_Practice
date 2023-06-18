@@ -7,7 +7,7 @@ import javax.sound.midi.*;
 class NotePlayer extends JFrame implements ActionListener {
     private JButton[] noteButtons;
     private Synthesizer synthesizer;
-    private MidiChannel midiChannel;
+    private MidiChannel[] midiChannels;
 
     NotePlayer() {
         super("Note Player");
@@ -18,12 +18,12 @@ class NotePlayer extends JFrame implements ActionListener {
         // Create an array of buttons for each note
         noteButtons = new JButton[notes.length];
 
-        // Initialize the MIDI synthesizer
+        // Initialize the MIDI synthesizer and channels
         try {
             synthesizer = MidiSystem.getSynthesizer();
             synthesizer.open();
-            midiChannel = synthesizer.getChannels()[0];
-            setInstrument(12);
+            midiChannels = synthesizer.getChannels();
+            setInstruments(); // Set the default instruments
         } catch (MidiUnavailableException e) {
             e.printStackTrace();
             System.exit(1);
@@ -56,8 +56,10 @@ class NotePlayer extends JFrame implements ActionListener {
         // Get the note value based on the button's text
         int noteValue = getNoteValue(source.getText());
 
-        // Play the corresponding note
-        playNote(noteValue);
+        // Play the corresponding note on all channels
+        for (MidiChannel midiChannel : midiChannels) {
+            playNoteOnChannel(midiChannel, noteValue);
+        }
     }
 
     private int getNoteValue(String note) {
@@ -82,7 +84,7 @@ class NotePlayer extends JFrame implements ActionListener {
         }
     }
 
-    private void playNote(int noteValue) {
+    private void playNoteOnChannel(MidiChannel midiChannel, int noteValue) {
         // Play the note for a duration of 500 milliseconds
         midiChannel.noteOn(noteValue, 80);
         try {
@@ -93,8 +95,11 @@ class NotePlayer extends JFrame implements ActionListener {
         midiChannel.noteOff(noteValue);
     }
 
-    private void setInstrument(int program){
-        midiChannel.programChange(program);
+    private void setInstruments() {
+        // Set the instruments for each channel
+        for (int i = 0; i < midiChannels.length; i++) {
+            midiChannels[i].programChange(i);
+        }
     }
 }
 
