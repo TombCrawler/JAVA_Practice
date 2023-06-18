@@ -9,7 +9,7 @@ class NotePlayer extends JFrame implements ActionListener {
     private MidiChannel[] midiChannels;
 
     NotePlayer() {
-        super("Note Player");
+        super("iOrchestra");
 
         // Define the musical notes for each instrument as strings
         String[] pianoNotes = {"C", "D", "E", "F", "G", "A", "B"};
@@ -18,10 +18,15 @@ class NotePlayer extends JFrame implements ActionListener {
         
 
         
+        // Define the instrument names for each panel
+        String pianoInstrument = "Piano";
+        String violinInstrument = "Violin";
+        String saxophoneInstrument = "Saxophone";
+
         // Create panels for each instrument
-        JPanel pianoPanel = createButtonPanel(pianoNotes, 0);
-        JPanel violinPanel = createButtonPanel(violinNotes, 1);
-        JPanel saxophonePanel = createButtonPanel(saxophoneNotes, 2);
+        JPanel pianoPanel = createButtonPanel(pianoNotes, 0, pianoInstrument);
+        JPanel violinPanel = createButtonPanel(violinNotes, 1, violinInstrument);
+        JPanel saxophonePanel = createButtonPanel(saxophoneNotes, 2, saxophoneInstrument);
 
         // Initialize the MIDI synthesizer and channels
         try {
@@ -46,7 +51,7 @@ class NotePlayer extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    private JPanel createButtonPanel(String[] notes, int channel) {
+    private JPanel createButtonPanel(String[] notes, int channel, String instrumentName) {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, notes.length));
         JButton[] buttons = new JButton[notes.length];
@@ -57,6 +62,7 @@ class NotePlayer extends JFrame implements ActionListener {
             buttonPanel.add(buttons[i]);
         }
         buttonPanel.putClientProperty("channel", channel); // Store the channel number as client property
+        buttonPanel.setBorder(BorderFactory.createTitledBorder(instrumentName)); // Set the instrument name as the border title
         return buttonPanel;
     }
 
