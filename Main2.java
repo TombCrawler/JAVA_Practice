@@ -4,6 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.sound.midi.*;
 
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
+import java.awt.Color;
+import java.awt.GridLayout;
+import javax.swing.JButton;
+
+
 class NotePlayer extends JFrame implements ActionListener {
     private Synthesizer synthesizer;
     private MidiChannel[] midiChannels;
@@ -79,7 +87,12 @@ class NotePlayer extends JFrame implements ActionListener {
             buttonPanel.add(buttons[i]);
         }
         buttonPanel.putClientProperty("channel", channel); // Store the channel number as client property
-        buttonPanel.setBorder(BorderFactory.createTitledBorder(instrumentName)); // Set the instrument name as the border title
+        
+        // Create a custom TitledBorder with white title color
+        TitledBorder titledBorder = BorderFactory.createTitledBorder(instrumentName);
+        titledBorder.setTitleColor(Color.WHITE);
+        buttonPanel.setBorder(titledBorder); // Set the custom titled border      
+          
         return buttonPanel;
     }
 
