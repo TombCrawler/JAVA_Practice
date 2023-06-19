@@ -1,6 +1,6 @@
 # The Practice of JAVA
 
-The main part is `iOrchestra`. I am making a handful orchestra which makes you a meaestro!
+The main part is `iOrchestra`. I am making a handful orchestra which makes you a maestro!
 Simply compile `javac iOrchestra.java` and run `java iOrchestra`
 
 Others: <br>
