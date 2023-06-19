@@ -39,10 +39,26 @@ class NotePlayer extends JFrame implements ActionListener {
             System.exit(1);
         }
 
-        // Add the instrument panels to the frame
-        add(pianoPanel, BorderLayout.NORTH);
-        add(violinPanel, BorderLayout.CENTER);
-        add(saxophonePanel, BorderLayout.SOUTH);
+        // Set the content pane layout to null for manual positioning
+        setLayout(null);
+
+        // Set the background image
+        ImageIcon backgroundImage = new ImageIcon("orc.jpeg");
+        Image image = backgroundImage.getImage();
+        JPanel backgroundPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+            }
+        };
+        setContentPane(backgroundPanel);
+
+        // Add the instrument panels to the 
+        backgroundPanel.setLayout(new BorderLayout());
+        backgroundPanel.add(pianoPanel, BorderLayout.NORTH);
+        backgroundPanel.add(violinPanel, BorderLayout.CENTER);
+        backgroundPanel.add(saxophonePanel, BorderLayout.SOUTH);
 
         // Configure the frame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,6 +69,7 @@ class NotePlayer extends JFrame implements ActionListener {
 
     private JPanel createButtonPanel(String[] notes, int channel, String instrumentName) {
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setOpaque(false); // Make the panel transparent
         buttonPanel.setLayout(new GridLayout(1, notes.length));
         JButton[] buttons = new JButton[notes.length];
         for (int i = 0; i < notes.length; i++) {
