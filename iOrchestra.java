@@ -92,7 +92,7 @@ class NotePlayer extends JFrame implements ActionListener {
         TitledBorder titledBorder = BorderFactory.createTitledBorder(instrumentName);
         titledBorder.setTitleColor(Color.WHITE);
         buttonPanel.setBorder(titledBorder); // Set the custom titled border      
-          
+
         return buttonPanel;
     }
 
@@ -156,7 +156,7 @@ class NotePlayer extends JFrame implements ActionListener {
     }
 }
 
-public class Main2 {
+public class iOrchestra {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(NotePlayer::new);
     }
