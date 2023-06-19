@@ -23,18 +23,20 @@ class NotePlayer extends JFrame implements ActionListener {
         String[] pianoNotes = {"C", "D", "E", "F", "G", "A", "B"};
         String[] violinNotes = {"G", "A", "B", "C", "D", "E", "F#"};
         String[] saxophoneNotes = {"D", "E", "F#", "G", "A", "B", "C#"};
-        
+        String[] bassNotes = {"C", "D", "E", "F", "G", "A", "B"};
 
         
         // Define the instrument names for each panel
         String pianoInstrument = "Piano";
         String violinInstrument = "Violin";
         String saxophoneInstrument = "Saxophone";
+        String bassInstrument = "Contrabass";
 
         // Create panels for each instrument
         JPanel pianoPanel = createButtonPanel(pianoNotes, 0, pianoInstrument);
         JPanel violinPanel = createButtonPanel(violinNotes, 1, violinInstrument);
         JPanel saxophonePanel = createButtonPanel(saxophoneNotes, 2, saxophoneInstrument);
+        JPanel bassPanel = createButtonPanel(bassNotes, 3, bassInstrument); 
 
         // Initialize the MIDI synthesizer and channels
         try {
@@ -67,6 +69,8 @@ class NotePlayer extends JFrame implements ActionListener {
         backgroundPanel.add(pianoPanel, BorderLayout.NORTH);
         backgroundPanel.add(violinPanel, BorderLayout.CENTER);
         backgroundPanel.add(saxophonePanel, BorderLayout.SOUTH);
+        backgroundPanel.add(bassPanel, BorderLayout.EAST);
+        
 
         // Configure the frame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -150,9 +154,10 @@ class NotePlayer extends JFrame implements ActionListener {
     private void setInstruments() {
         // Set the instruments for each channel
         // Piano: Channel 0, Violin: Channel 1, Saxophone: Channel 2
-        midiChannels[0].programChange(0); // Piano instrument
+        midiChannels[0].programChange(1); // Piano instrument
         midiChannels[1].programChange(41); // Violin instrument
         midiChannels[2].programChange(65); // Saxophone instrument
+        midiChannels[3].programChange(33); // Contrbass inst
     }
 }
 
